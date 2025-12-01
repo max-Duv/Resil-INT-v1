@@ -1,0 +1,4 @@
+pyadi-iio
+numpy
+prometheus_client
+

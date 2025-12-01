@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pluto-rx
+  namespace: resilint-rf
+  labels:
+    app: pluto-rx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pluto-rx
+  template:
+    metadata:
+      labels:
+        app: pluto-rx
+    spec:
+      containers:
+        - name: pluto-rx
+          image: pluto-rx:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: PLUTO_URI
+              value: "ip:192.168.2.1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pluto-rx
+  namespace: resilint-rf
+  labels:
+    app: pluto-rx
+spec:
+  selector:
+    app: pluto-rx
+  ports:
+    - name: metrics
+      port: 8000
+      targetPort: 8000

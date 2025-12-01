@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pluto-rx
+  namespace: monitoring
+  labels:
+    release: kps
+spec:
+  selector:
+    matchLabels:
+      app: pluto-rx
+  namespaceSelector:
+    matchNames:
+      - resilint-rf
+  endpoints:
+    - port: metrics
+      interval: 5s
